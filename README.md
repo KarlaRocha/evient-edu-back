@@ -11,8 +11,8 @@ The purpose of this repo is provide a simple API for a Tic-Tac-Toe game found in
 
 ```source env/bin/activate```
 
-Escapte virtual environment
-```deactivate````
+# Escapte virtual environment
+```deactivate```
 
 ## References
 
