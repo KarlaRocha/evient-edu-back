@@ -18,6 +18,7 @@ from django.urls import path
 from rest_framework_swagger.views import get_swagger_view
 
 from player.urls import player_urlpatterns
+from match.urls import match_urlpatterns
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -26,3 +27,4 @@ urlpatterns = [
     path('swagger/', schema_view),
 ]
 urlpatterns += player_urlpatterns
+urlpatterns += match_urlpatterns
