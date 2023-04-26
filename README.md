@@ -17,6 +17,9 @@ The purpose of this repo is provide a simple API for a Tic-Tac-Toe game found in
 # Install Package Requirements
 ```pip install -r requirements.txt```
 
+# Create new app
+```python manage.py startapp [APP_NAME]```
+
 ## References
 
 https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/
