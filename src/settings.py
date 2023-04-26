@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework_swagger",
     "player",
     "match",
+    "cell",
 ]
 
 MIDDLEWARE = [

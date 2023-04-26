@@ -19,6 +19,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 from player.urls import player_urlpatterns
 from match.urls import match_urlpatterns
+from cell.urls import cell_urlpatterns
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -28,3 +29,4 @@ urlpatterns = [
 ]
 urlpatterns += player_urlpatterns
 urlpatterns += match_urlpatterns
+urlpatterns += cell_urlpatterns
