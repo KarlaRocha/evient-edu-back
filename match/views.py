@@ -51,5 +51,4 @@ class MatchList(generics.GenericAPIView):
 
 class MatchDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Match.objects.all()
-    filter_backends = (filters.DjangoFilterBackend,)
     serializer_class = MatchSerializer
