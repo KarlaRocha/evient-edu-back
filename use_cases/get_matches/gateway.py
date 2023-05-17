@@ -8,7 +8,6 @@ class Gateway:
         try:
             matches = Match.objects.all()
             matches = self._apply_filters(args, matches)
-            
             matches = [{
                 "id": data.id,
                 "updated_data": data.updated_date,
@@ -27,6 +26,7 @@ class Gateway:
                 "winner": self._get_winner(data),
                 "turn": self._get_turn(data),
                 "is_draw": data.is_draw,
+                "cells": self._get_cells(data)
             } 
             for data in matches]
             return matches
@@ -52,3 +52,12 @@ class Gateway:
         if turn is not None:
             turn = turn.pk
         return turn
+    
+    def _get_cells(self, data):
+        cells = data.cell_set.all()
+        return [{
+            "id": cell.pk,
+            "row": cell.row,
+            "column": cell.column,
+            "symbol": cell.symbol,
+        } for cell in cells]
