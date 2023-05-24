@@ -2,9 +2,8 @@ from rest_framework import generics
 from django_filters import rest_framework as filters
 from django.http import JsonResponse
 
-from .models import Match
-from .serializers import MatchSerializer
 from use_cases.get_matches.controller import Controller as GetMatchesController
+from use_cases.get_match.controller import Controller as GetMatchController
 
 
 # class MatchList(generics.ListCreateAPIView):
@@ -49,6 +48,10 @@ class MatchList(generics.GenericAPIView):
         return player
 
 
-class MatchDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Match.objects.all()
-    serializer_class = MatchSerializer
+class MatchDetail(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        print(kwargs)
+        id = kwargs["pk"]
+        controller = GetMatchController()
+        data = controller.get_match(id)
+        return JsonResponse({"success": True, "data": data}, status=200)

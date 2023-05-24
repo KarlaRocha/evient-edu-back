@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from .models import Match
-from .filters import MatchFilter
+from cell.serializers import CellSerializer
 
 
 class MatchSerializer(serializers.ModelSerializer):
+    cells = CellSerializer(many=True, read_only=True)
+
     class Meta:
         model = Match
         fields = '__all__'
-        filter_class = MatchFilter
