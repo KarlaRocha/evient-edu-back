@@ -1,9 +1,9 @@
 from rest_framework import generics
-from django_filters import rest_framework as filters
 from django.http import JsonResponse
 
 from use_cases.get_matches.controller import Controller as GetMatchesController
 from use_cases.get_match.controller import Controller as GetMatchController
+from use_cases.create_match.controller import Controller as CreateMatchController
 
 
 # class MatchList(generics.ListCreateAPIView):
@@ -55,3 +55,10 @@ class MatchDetail(generics.GenericAPIView):
         controller = GetMatchController()
         data = controller.get_match(id)
         return JsonResponse({"success": True, "data": data}, status=200)
+
+
+class MatchCreate(generics.GenericAPIView):
+    def put(self, request, *args, **kwargs):
+        controller = CreateMatchController()
+        match_id = controller.create_match(request.data)
+        return JsonResponse({"success": True, "match_id": match_id}, status=200)
