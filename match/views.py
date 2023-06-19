@@ -4,12 +4,9 @@ from django.http import JsonResponse
 from use_cases.get_matches.controller import Controller as GetMatchesController
 from use_cases.get_match.controller import Controller as GetMatchController
 from use_cases.create_match.controller import Controller as CreateMatchController
+from use_cases.update_match.controller import Controller as UpdateMatchController
+from use_cases.update_player_move.controller import Controller as PlayerMoveController
 
-
-# class MatchList(generics.ListCreateAPIView):
-#     queryset = Match.objects.all()
-#     filter_backends = (filters.DjangoFilterBackend,)
-#     serializer_class = MatchSerializer
 
 class MatchList(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -50,11 +47,19 @@ class MatchList(generics.GenericAPIView):
 
 class MatchDetail(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
-        print(kwargs)
         id = kwargs["pk"]
         controller = GetMatchController()
         data = controller.get_match(id)
         return JsonResponse({"success": True, "data": data}, status=200)
+    
+    def patch(self, request, *args, **kwargs):
+        id = kwargs["pk"]
+        payload = request.data
+        print(id)
+        print(payload)
+        controller = UpdateMatchController()
+        success = controller.update_product(id, payload)
+        return JsonResponse({"success": success}, status=200)
 
 
 class MatchCreate(generics.GenericAPIView):
@@ -62,3 +67,13 @@ class MatchCreate(generics.GenericAPIView):
         controller = CreateMatchController()
         match_id = controller.create_match(request.data)
         return JsonResponse({"success": True, "match_id": match_id}, status=200)
+
+
+class PlayerMove(generics.GenericAPIView):
+    def patch(self, request, *args, **kwargs):
+        controller = PlayerMoveController()
+        match_id = kwargs["pk"]
+        player_id = request.data["player_id"]
+        cell_id = request.data["cell_id"]
+        response = controller.update_player_move(match_id, player_id, cell_id)
+        return JsonResponse(response, status=200)
