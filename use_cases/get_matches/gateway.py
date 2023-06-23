@@ -25,8 +25,7 @@ class Gateway:
                 "symbol": data.symbol,
                 "winner": self._get_winner(data),
                 "turn": self._get_turn(data),
-                "is_draw": data.is_draw,
-                "cells": self._get_cells(data)
+                "is_draw": data.is_draw
             } 
             for data in matches]
             return matches
