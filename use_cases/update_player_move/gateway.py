@@ -14,10 +14,10 @@ class Gateway:
             new_symbol = self._get_new_symbol(match)
             match.symbol = new_symbol
             match.save()
-            return {"success": True}
+            return {"success": True, "errors": None}
         except Exception as ex:
             print(ex)
-            return {"success": False}
+            return {"success": False, "errors": [ex]}
 
     # TODO: Move to use case
     def _get_player_turn(self, player_id, match):
