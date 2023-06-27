@@ -6,6 +6,7 @@ from use_cases.get_match.controller import Controller as GetMatchController
 from use_cases.create_match.controller import Controller as CreateMatchController
 from use_cases.update_match.controller import Controller as UpdateMatchController
 from use_cases.update_player_move.controller import Controller as PlayerMoveController
+from use_cases.update_winner.controller import Controller as WinnerController
 
 
 class MatchList(generics.GenericAPIView):
@@ -77,3 +78,13 @@ class PlayerMove(generics.GenericAPIView):
         cell_id = request.data["cell_id"]
         response = controller.update_player_move(match_id, player_id, cell_id)
         return JsonResponse(response, status=200)
+
+
+class PlayerWinner(generics.GenericAPIView):
+    def patch(self, request, *args, **kwargs):
+        controller = WinnerController()
+        match_id = kwargs["pk"]
+        winner_id = request.data["winner_id"]
+        response = controller.update_winner(match_id, winner_id)
+        return JsonResponse(response, status=200)
+        
