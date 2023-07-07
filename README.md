@@ -20,6 +20,9 @@ The purpose of this repo is provide a simple API for a Tic-Tac-Toe game found in
 # Create new app
 ```python manage.py startapp [APP_NAME]```
 
+# To run websocket channels
+```daphne src.asgi:application```
+
 ## References
 
 https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/

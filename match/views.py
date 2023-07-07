@@ -1,5 +1,7 @@
 from rest_framework import generics
 from django.http import JsonResponse
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 from use_cases.get_matches.controller import Controller as GetMatchesController
 from use_cases.get_match.controller import Controller as GetMatchController
@@ -67,6 +69,12 @@ class MatchCreate(generics.GenericAPIView):
     def put(self, request, *args, **kwargs):
         controller = CreateMatchController()
         match_id = controller.create_match(request.data)
+        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'matches_group',  # Group name to send the notification to
+            {'type': 'notify_new_march', 'message': 'New match created'}
+        )
         return JsonResponse({"success": True, "match_id": match_id}, status=200)
 
 
@@ -77,6 +85,12 @@ class PlayerMove(generics.GenericAPIView):
         player_id = request.data["player_id"]
         cell_id = request.data["cell_id"]
         response = controller.update_player_move(match_id, player_id, cell_id)
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'match_group',  # Group name to send the notification to
+            {'type': 'notify_player_move', 'message': str({"match_id": match_id})}
+        )
         return JsonResponse(response, status=200)
 
 
