@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "player",
     "match",
     "cell",
+    "users",
+    "auths",
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.User"
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "auths.authentication.SafeJWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated", # make all endpoints private
+    )
+}
+REFRESH_TOKEN_SECRET = "bCxM3GjBJffmER30hF1HA6Y6TQOYhe96gYlA7AEDv9WUvHmRhAvERpuHVsdIxGFU"
