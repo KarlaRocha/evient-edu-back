@@ -1,1 +1,9 @@
 db.sqlite3
+.venv
+*.cpython-*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
